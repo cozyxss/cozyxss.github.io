@@ -1,34 +1,52 @@
 # cozyxss.com
 
-Bug bounty notları, CTF writeup'ları ve öğrendiklerim.
+```
+> your friendly neighbourhood bug bounty hunter
+```
 
-## Yeni yazı ekleme
+Source of my blog at **[cozyxss.com](https://cozyxss.com)**: PortSwigger lab walkthroughs, CTF writeups, bug bounty notes and the lessons that came with them.
 
-1. `src/posts/` klasörüne yeni bir dosya ekle. Adı tarihle başlasın:
-   `2026-12-01-lab-adi.md`
-2. `post-template.md` dosyasındaki üst kısmı kopyala ve doldur:
+## Stack
 
-   ```yaml
-   ---
-   no: 1                      # yazı numarası, 001 olarak görünür
-   title: "PortSwigger Lab: ..."
-   summary: "Ana sayfada görünen 1-2 cümle."
-   category: LessonLearned    # yeni kategori yazarsan menüye kendiliğinden eklenir
-   tags: [authentication, portswigger]
-   cover: /images/001/cover.png   # isteğe bağlı kapak görseli
-   ---
-   ```
-3. Görselleri `src/images/<yazı-no>/` içine koy, yazıda şöyle kullan:
-   `![açıklama](/images/001/step1.png)`
-4. Commit + push. Site 1-2 dakika içinde kendini günceller.
+- [Eleventy](https://www.11ty.dev/) static site, deployed to GitHub Pages with GitHub Actions
+- Phosphor terminal theme with a light "paper" mode, built from scratch
+- Self-hosted fonts (IBM Plex Mono, Space Mono, VT323), no trackers
+- Comments via [giscus](https://giscus.app) (GitHub Discussions), claps via [applause-button](https://applause-button.com)
 
-Taslakların repoya gitmesini istemiyorsan `_drafts/` klasöründe tut, bu klasör git'e gönderilmiyor.
+## Writing a post
 
-## Bilgisayarda önizleme
+Add a Markdown file to `src/posts/`, named with the date:
 
 ```
+src/posts/2026-12-01-lab-name.md
+```
+
+Front matter (see `post-template.md`):
+
+```yaml
+---
+no: 1                          # shown as 001
+title: "PortSwigger Lab: ..."
+summary: "One or two sentences for the home page."
+category: LessonLearned        # new categories appear in the menu automatically
+tags: [authentication, portswigger]
+cover: /images/001/cover.png   # optional
+---
+```
+
+Images go in `src/images/<post-no>/`. Push to `main` and the site rebuilds in under a minute.
+
+## Run locally
+
+```bash
 npm install
-npm start
+npm start   # http://localhost:8080
 ```
 
-Sonra tarayıcıda `http://localhost:8080` adresini aç.
+## Disclosure
+
+Bug bounty findings are published only after they are fixed and the program allows disclosure.
+
+## Contact
+
+Comments on any post, or find me on [X](https://x.com/cozyxss) · [Medium](https://medium.com/@cozyxss) · [LinkedIn](https://linkedin.com/in/bbetulkaya)
