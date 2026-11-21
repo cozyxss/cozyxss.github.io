@@ -39,6 +39,11 @@ layout: base.njk
     <button class="copy-link" type="button" data-url="{{ site.url }}{{ page.url }}">copy link</button>
   </div>
 
+  <div class="byline">
+    {% set avatarClass = "av-byline" %}{% include "avatar.njk" %}
+    <p><span class="muted">written by</span> betul {% include "syms.njk" %}<br><span class="muted">aka cozyxss · your friendly neighbourhood bug bounty hunter</span></p>
+  </div>
+
   <nav class="post-nav" aria-label="More posts">
     {%- if nx %}
     <a class="next" href="{{ nx.url }}"><span>newer →</span>{{ nx.data.title }}</a>

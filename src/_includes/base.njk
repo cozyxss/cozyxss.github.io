@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0a1008">
+<meta name="theme-color" content="#0b0b0c">
 {% set pageTitle = (title + " · " + site.title) if title else (site.title + " | " + site.subtitle) %}
 <title>{{ pageTitle }}</title>
 <meta name="description" content="{{ summary or site.description }}">
@@ -33,14 +33,14 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="ticker" aria-hidden="true"><div class="wrap"><span>cozyxss.com // bug bounty notes · ctf writeups · lessons learned</span></div></div>
+<div class="ticker"><div class="wrap"><span class="who">betul {% include "syms.njk" %}</span><span class="sl">//</span><span>bug bounty notes · ctf writeups · lessons learned</span></div></div>
 <header class="site-header wrap">
+  <svg class="spider" viewBox="0 0 40 160" aria-hidden="true"><line x1="20" y1="0" x2="20" y2="125" class="thread"/><g transform="translate(20,140) scale(.25)"><circle r="72" class="av-bg"/><circle r="72" class="av-ring" fill="none"/><polygon class="av-hg" points="-18,-40 18,-40 0,0 18,40 -18,40 0,0"/></g></svg>
+  <svg class="web-deco" viewBox="-100 -100 200 200" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="0.7"><g><line x1="0" y1="0" x2="100" y2="0"/><line x1="0" y1="0" x2="86.6" y2="50"/><line x1="0" y1="0" x2="50" y2="86.6"/><line x1="0" y1="0" x2="0" y2="100"/><line x1="0" y1="0" x2="-50" y2="86.6"/><line x1="0" y1="0" x2="-86.6" y2="50"/><line x1="0" y1="0" x2="-100" y2="0"/><line x1="0" y1="0" x2="-86.6" y2="-50"/><line x1="0" y1="0" x2="-50" y2="-86.6"/><line x1="0" y1="0" x2="0" y2="-100"/><line x1="0" y1="0" x2="50" y2="-86.6"/><line x1="0" y1="0" x2="86.6" y2="-50"/></g><polygon points="20,0 17.3,10 10,17.3 0,20 -10,17.3 -17.3,10 -20,0 -17.3,-10 -10,-17.3 0,-20 10,-17.3 17.3,-10"/><polygon points="42,0 36.4,21 21,36.4 0,42 -21,36.4 -36.4,21 -42,0 -36.4,-21 -21,-36.4 0,-42 21,-36.4 36.4,-21"/><polygon points="65,0 56.3,32.5 32.5,56.3 0,65 -32.5,56.3 -56.3,32.5 -65,0 -56.3,-32.5 -32.5,-56.3 0,-65 32.5,-56.3 56.3,-32.5"/><polygon points="88,0 76.2,44 44,76.2 0,88 -44,76.2 -76.2,44 -88,0 -76.2,-44 -44,-76.2 0,-88 44,-76.2 76.2,-44"/></svg>
   <div class="brand-row">
-    <a class="brand" href="/" aria-label="cozyxss, betul">
+    <a class="brand" href="/" aria-label="cozyxss home">
+      {% set avatarClass = "av-brand" %}{% include "avatar.njk" %}
       <span class="brand-name">{{ site.title }}</span><span class="cursor" aria-hidden="true">_</span>
-      <span class="brand-sub" aria-hidden="true"><span class="sep">|</span> betul
-        <svg class="sym" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><polygon points="3.6,7 20.4,7 12,22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><svg class="sym hg" viewBox="0 0 24 24"><polygon points="5,2 19,2 12,12 19,22 5,22 12,12"/></svg>
-      </span>
     </a>
     <button class="theme-toggle" type="button" aria-label="Switch between screen and paper mode" title="screen / paper">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
@@ -62,7 +62,15 @@
 </main>
 
 <footer class="site-footer">
-  <div class="wrap">
+  <div class="wrap foot-inner">
+    <svg class="web-deco web-foot" viewBox="-100 -100 200 200" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="0.7"><line x1="0" y1="0" x2="-100" y2="0"/><line x1="0" y1="0" x2="-86.6" y2="-50"/><line x1="0" y1="0" x2="-50" y2="-86.6"/><line x1="0" y1="0" x2="0" y2="-100"/><path d="M-25,0 L-21.7,-12.5 L-12.5,-21.7 L0,-25"/><path d="M-50,0 L-43.3,-25 L-25,-43.3 L0,-50"/><path d="M-75,0 L-65,-37.5 L-37.5,-65 L0,-75"/><path d="M-98,0 L-85,-49 L-49,-85 L0,-98"/></svg>
+    <div class="sig">
+      {% set avatarClass = "av-foot" %}{% include "avatar.njk" %}
+      <div>
+        <p class="sig-name">betul {% include "syms.njk" %}</p>
+        <p>© {{ build.year }} cozyxss · stay curious, stay in scope.</p>
+      </div>
+    </div>
     <div class="foot-links">
       <a href="{{ site.links.github }}">github</a>
       <a href="{{ site.links.x }}">x</a>
@@ -70,7 +78,6 @@
       <a href="{{ site.links.linkedin }}">linkedin</a>
       <a href="/feed.xml">rss</a>
     </div>
-    <p>© {{ build.year }} cozyxss · stay curious, stay in scope.</p>
   </div>
   <div class="ticker" aria-hidden="true"><div class="wrap"><span>clap if it helped. follow @cozyxss</span></div></div>
 </footer>
