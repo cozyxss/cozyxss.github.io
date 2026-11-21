@@ -1,0 +1,24 @@
+<article class="card">
+  <div class="bar">
+    {%- if post.data.no is defined %}<span class="no">{{ post.data.no | pad }}</span><span class="sl">//</span>{% endif %}
+    <time datetime="{{ post.date | isoDate }}">{{ post.date | date }}</time>
+    {%- if post.data.category %}<span class="sl">//</span><a href="/category/{{ post.data.category | slug2 }}/">#{{ post.data.category }}</a>{% endif %}
+  </div>
+  <div class="card-inner{% if post.data.cover %} has-cover{% endif %}">
+    {%- if post.data.cover %}
+    <a class="card-cover crt-img" href="{{ post.url }}" tabindex="-1" aria-hidden="true">
+      <img src="{{ post.data.cover }}" alt="" loading="lazy" width="320" height="200">
+    </a>
+    {%- endif %}
+    <div class="card-body">
+      <h2 class="card-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+      {%- if post.data.summary %}
+      <p class="card-summary"><span class="prompt">&gt;</span> {{ post.data.summary }}</p>
+      {%- endif %}
+      <div class="card-foot">
+        <span class="tags">{%- for t in post.data.tags | realTags %}<a href="/tags/#{{ t | slug2 }}">{{ t }}</a>{% endfor -%}</span>
+        <a class="more" href="{{ post.url }}" aria-label="Read {{ post.data.title }}">read →</a>
+      </div>
+    </div>
+  </div>
+</article>

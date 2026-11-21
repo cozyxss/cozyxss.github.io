@@ -1,0 +1,85 @@
+---
+layout: base.njk
+---
+{%- set nx = collections.posts | getPreviousCollectionItem(page) -%}
+{%- set pv = collections.posts | getNextCollectionItem(page) -%}
+<article class="post">
+  <header class="post-head">
+    <a class="back" href="/">← cd ..</a>
+    <div class="bar">
+      {%- if no is defined %}<span class="no">{{ no | pad }}</span><span class="sl">//</span>{% endif %}
+      <time datetime="{{ page.date | isoDate }}">{{ page.date | date }}</time>
+      <span class="sl">//</span><span>{{ content | readTime }} min read</span>
+      {%- if category %}<span class="sl">//</span><a href="/category/{{ category | slug2 }}/">#{{ category }}</a>{% endif %}
+    </div>
+    <h1>{{ title }}</h1>
+    {%- if summary %}<p class="post-lede"><span class="prompt">&gt;</span> {{ summary }}</p>{% endif %}
+  </header>
+
+  {%- if cover %}
+  <figure class="post-cover crt-img"><img src="{{ cover }}" alt="{{ coverAlt or '' }}"></figure>
+  {%- endif %}
+
+  <div class="prose">
+{{ content | safe }}
+  </div>
+
+  {%- set tl = tags | realTags %}
+  {%- if tl.length %}
+  <p class="post-tags">
+    {%- for t in tl %}<a href="/tags/#{{ t | slug2 }}">{{ t }}</a>{% endfor -%}
+  </p>
+  {%- endif %}
+
+  <div class="post-actions">
+    <div class="clap">
+      <span class="clap-hint">&gt; liked it?</span>
+      <applause-button multiclap="true" url="cozyxss.com{{ page.url }}"></applause-button>
+    </div>
+    <button class="copy-link" type="button" data-url="{{ site.url }}{{ page.url }}">copy link</button>
+  </div>
+
+  <nav class="post-nav" aria-label="More posts">
+    {%- if nx %}
+    <a class="next" href="{{ nx.url }}"><span>newer →</span>{{ nx.data.title }}</a>
+    {%- endif %}
+    {%- if pv %}
+    <a class="prev" href="{{ pv.url }}"><span>← older</span>{{ pv.data.title }}</a>
+    {%- endif %}
+  </nav>
+
+  <section class="comments" aria-label="Comments">
+    <h2><span class="prompt">&gt;</span> comments</h2>
+    {%- if site.giscus.repoId and site.giscus.categoryId %}
+    <div class="giscus"></div>
+    <script>
+      (function () {
+        var s = document.createElement("script");
+        var attrs = {
+          src: "https://giscus.app/client.js",
+          "data-repo": "{{ site.giscus.repo }}",
+          "data-repo-id": "{{ site.giscus.repoId }}",
+          "data-category": "{{ site.giscus.category }}",
+          "data-category-id": "{{ site.giscus.categoryId }}",
+          "data-mapping": "pathname",
+          "data-strict": "1",
+          "data-reactions-enabled": "1",
+          "data-emit-metadata": "0",
+          "data-input-position": "top",
+          "data-theme": document.documentElement.dataset.theme === "dark" ? "transparent_dark" : "light",
+          "data-lang": "en",
+          "data-loading": "lazy",
+          crossorigin: "anonymous"
+        };
+        for (var k in attrs) s.setAttribute(k, attrs[k]);
+        s.async = true;
+        document.currentScript.parentNode.appendChild(s);
+      })();
+    </script>
+    {%- else %}
+    <p class="muted">Comments will appear here once giscus is connected.</p>
+    {%- endif %}
+  </section>
+</article>
+<link rel="stylesheet" href="/assets/vendor/applause-button.css">
+<script src="/assets/vendor/applause-button.js" defer></script>

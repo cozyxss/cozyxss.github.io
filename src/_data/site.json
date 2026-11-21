@@ -1,0 +1,20 @@
+{
+  "title": "cozyxss",
+  "subtitle": "Bug Bounty",
+  "tagline": "your friendly neighbourhood bug bounty hunter",
+  "description": "Bug bounty notes, CTF writeups and lessons learned by cozyxss.",
+  "url": "https://cozyxss.com",
+  "lang": "en",
+  "links": {
+    "github": "https://github.com/cozyxss",
+    "x": "https://x.com/cozyxss",
+    "medium": "https://medium.com/@cozyxss",
+    "linkedin": "https://linkedin.com/in/bbetulkaya"
+  },
+  "giscus": {
+    "repo": "cozyxss/cozyxss.github.io",
+    "repoId": "",
+    "category": "Comments",
+    "categoryId": ""
+  }
+}

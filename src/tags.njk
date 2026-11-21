@@ -1,0 +1,19 @@
+---
+layout: base.njk
+title: tags
+permalink: /tags/
+---
+<h1 class="list-title">tags</h1>
+<p class="tag-cloud">
+{%- for t in collections.tagList %}<a href="#{{ t.slug }}">{{ t.name }} <span class="count">{{ t.posts.length }}</span></a>{% endfor -%}
+</p>
+{%- for t in collections.tagList %}
+<section class="tag-group" id="{{ t.slug }}">
+  <h2>{{ t.name }}</h2>
+  <ul class="compact-list">
+  {%- for post in t.posts %}
+    <li><time datetime="{{ post.date | isoDate }}">{{ post.date | date }}</time><a href="{{ post.url }}">{% if post.data.no is defined %}{{ post.data.no | pad }} | {% endif %}{{ post.data.title }}</a></li>
+  {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}

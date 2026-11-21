@@ -1,0 +1,16 @@
+---
+layout: base.njk
+pagination:
+  data: collections.categories
+  size: 1
+  alias: cat
+permalink: "/category/{{ cat.slug }}/"
+eleventyComputed:
+  title: "#{{ cat.name }}"
+---
+<h1 class="list-title">#{{ cat.name }} <span class="count">{{ cat.posts.length }} post{% if cat.posts.length != 1 %}s{% endif %}</span></h1>
+<div class="post-list">
+{%- for post in cat.posts %}
+{% include "postcard.njk" %}
+{%- endfor %}
+</div>
