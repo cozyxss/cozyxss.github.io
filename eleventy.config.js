@@ -73,6 +73,8 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("slug2", slug);
+  eleventyConfig.addFilter("head", (arr, n) => (arr || []).slice(0, n));
+  eleventyConfig.addFilter("reverse", (arr) => [...(arr || [])].reverse());
   eleventyConfig.addFilter("pad2", (n) => String(n ?? 0).padStart(2, "0"));
   eleventyConfig.addFilter("pad", (n) => String(n ?? "").padStart(3, "0"));
   eleventyConfig.addFilter("readTime", (html) => {
