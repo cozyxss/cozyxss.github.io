@@ -46,6 +46,7 @@
   <p class="tagline"><span class="prompt">&gt;</span> {{ site.tagline }}</p>
   <nav class="cat-nav" aria-label="Categories">
     <a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>all</a>
+    <a href="/web-vulnerabilities/" {% if page.url.startsWith('/web-vulnerabilities/') %}aria-current="page"{% endif %}>web vulns</a>
     {%- for c in collections.categories %}
     <a href="/category/{{ c.slug }}/" {% if page.url == '/category/' + c.slug + '/' %}aria-current="page"{% endif %}>#{{ c.name }}</a>
     {%- endfor %}

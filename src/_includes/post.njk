@@ -10,6 +10,7 @@ layout: base.njk
       {%- if no is defined %}<span class="no">{{ no | pad }}</span><span class="sl">//</span>{% endif %}
       <time datetime="{{ page.date | isoDate }}">{{ page.date | date }}</time>
       <span class="sl">//</span><span>{{ content | readTime }} min read</span>
+      {%- if series %}<span class="sl">//</span><a href="/web-vulnerabilities/#{{ series | slug2 }}">{{ series }} {{ part | pad2 }}</a>{% endif %}
       {%- if category %}<span class="sl">//</span><a href="/category/{{ category | slug2 }}/">#{{ category }}</a>{% endif %}
     </div>
     <h1>{{ title }}</h1>

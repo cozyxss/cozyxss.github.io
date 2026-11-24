@@ -1,0 +1,17 @@
+---
+layout: base.njk
+title: web vulnerabilities
+permalink: /web-vulnerabilities/
+---
+<h1 class="list-title">web vulnerabilities</h1>
+<p class="tagline" style="margin-bottom:2.2rem"><span class="prompt">&gt;</span> Zafiyet türlerine göre notlarım, konu konu ve sırayla.</p>
+{%- for s in collections.seriesList %}
+<section class="tag-group" id="{{ s.slug }}">
+  <h2>{{ s.name }} <span class="count" style="font-size:.8rem;opacity:.6;margin-left:.5rem">{{ s.posts.length }} note{% if s.posts.length != 1 %}s{% endif %}</span></h2>
+  <ul class="compact-list">
+  {%- for post in s.posts %}
+    <li><time datetime="{{ post.date | isoDate }}">{{ post.date | date }}</time><a href="{{ post.url }}">{{ post.data.part | pad2 }} | {{ post.data.title }}</a></li>
+  {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}

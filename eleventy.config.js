@@ -58,7 +58,22 @@ export default function (eleventyConfig) {
     return [...map.values()].sort((a, b) => a.name.localeCompare(b.name));
   });
 
+  // Web vulnerability series: [{ name, slug, posts }] — posts in part order (00, 01, ...)
+  eleventyConfig.addCollection("seriesList", (api) => {
+    const posts = api.getFilteredByGlob("src/posts/*.md").filter((p) => !p.data.draft);
+    const map = new Map();
+    for (const p of posts) {
+      const s = p.data.series;
+      if (!s) continue;
+      if (!map.has(s)) map.set(s, { name: s, slug: slug(s), posts: [] });
+      map.get(s).posts.push(p);
+    }
+    for (const v of map.values()) v.posts.sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0));
+    return [...map.values()];
+  });
+
   eleventyConfig.addFilter("slug2", slug);
+  eleventyConfig.addFilter("pad2", (n) => String(n ?? 0).padStart(2, "0"));
   eleventyConfig.addFilter("pad", (n) => String(n ?? "").padStart(3, "0"));
   eleventyConfig.addFilter("readTime", (html) => {
     const words = String(html).replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;

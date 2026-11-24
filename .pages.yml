@@ -25,11 +25,19 @@ content:
       - name: summary
         label: Summary (1-2 sentences for the home page)
         type: text
+      - name: series
+        label: Web vulnerability series (optional)
+        type: select
+        options:
+          values: [Access Control, XSS, SQL Injection]
+      - name: part
+        label: Part number in the series (0, 1, 2...)
+        type: number
       - name: category
         label: Category
         type: select
         options:
-          values: [LessonLearned, CTF, Notes]
+          values: [LessonLearned, CTF]
       - name: tags
         label: Tags
         type: string

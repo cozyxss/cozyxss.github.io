@@ -2,6 +2,7 @@
   <div class="bar">
     {%- if post.data.no is defined %}<span class="no">{{ post.data.no | pad }}</span><span class="sl">//</span>{% endif %}
     <time datetime="{{ post.date | isoDate }}">{{ post.date | date }}</time>
+    {%- if post.data.series %}<span class="sl">//</span><a href="/web-vulnerabilities/#{{ post.data.series | slug2 }}">{{ post.data.series }} {{ post.data.part | pad2 }}</a>{% endif %}
     {%- if post.data.category %}<span class="sl">//</span><a href="/category/{{ post.data.category | slug2 }}/">#{{ post.data.category }}</a>{% endif %}
   </div>
   <div class="card-inner{% if post.data.cover %} has-cover{% endif %}">
