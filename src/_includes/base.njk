@@ -43,7 +43,7 @@
       <span class="brand-name">{{ site.title }}</span><span class="cursor" aria-hidden="true">_</span>
     </a>
     <div class="head-tools">
-    <a class="lang-switch" href="{{ page.url | altUrl(lang) }}" hreflang="{{ t.otherLang }}" lang="{{ t.otherLang }}" title="{{ t.switchLabel }}"><span class="globe" aria-hidden="true">🌐</span><span class="lang-code">{{ t.otherLangName }}</span></a>
+    <a class="lang-switch" href="{{ page.url | altUrl(lang) }}" hreflang="{{ t.otherLang }}" lang="{{ t.otherLang }}" title="{{ t.switchLabel }}" aria-label="{{ t.switchLabel }}"><span class="flag" aria-hidden="true">{{ t.otherFlag }}</span></a>
     <button class="theme-toggle" type="button" aria-label="Switch between screen and paper mode" title="screen / paper">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
     </button>

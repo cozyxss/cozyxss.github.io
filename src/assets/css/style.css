@@ -336,13 +336,12 @@ main, .site-header { position: relative; z-index: 1; }
 /* Language switch (TR / EN) */
 .head-tools { display: flex; align-items: center; gap: .5rem; }
 .lang-switch {
-  display: inline-flex; align-items: center; gap: .4rem; height: 2.4rem; padding: 0 .75rem;
-  border: 1px solid var(--line-hi); font-family: var(--term); font-size: 1.15rem; line-height: 1;
-  text-transform: uppercase; color: var(--ph); text-decoration: none;
+  width: 2.4rem; height: 2.4rem; flex: none; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--line-hi); text-decoration: none;
 }
-.lang-switch .globe { font-size: 1rem; line-height: 1; filter: grayscale(1); }
-.lang-switch .lang-code { letter-spacing: .04em; }
-.lang-switch:hover { background: var(--ph); color: var(--bar-fg); }
+.lang-switch .flag { font-size: 1.2rem; line-height: 1; }
+.lang-switch:hover { background: var(--ph); }
 .see-all { text-align: right; margin-top: 1rem; }
 .section-intro { margin-bottom: 2.2rem; }
 .topic-head .count { font-size: .8rem; opacity: .6; margin-left: .5rem; }
