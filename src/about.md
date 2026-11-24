@@ -14,8 +14,10 @@ I'm a computer engineer working on IT support and systems, and learning web secu
 
 **What you'll find here**
 
-- `#LessonLearned` — notes from labs and mistakes worth remembering
-- `#CTF` — writeups of challenges I solved
+- **web vulns** — my notes on each vulnerability type, topic by topic (starting with access control)
+- **burp** — small Burp Suite tricks that save time while solving labs
+
+I write my notes in Turkish, and every post is also available in English. Use the **EN / TR** switch at the top.
 
 **Elsewhere**
 

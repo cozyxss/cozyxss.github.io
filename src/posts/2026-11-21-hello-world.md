@@ -2,7 +2,6 @@
 no: 0
 title: "hello, world"
 summary: "A new home for my bug bounty notes, CTF writeups and the lessons that came with them."
-category: LessonLearned
 tags: [meta]
 ---
 

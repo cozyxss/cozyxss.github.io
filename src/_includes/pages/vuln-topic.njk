@@ -1,0 +1,8 @@
+{%- set t = i18n[lang] %}{%- set px = t.prefix %}
+<a class="back" href="{{ px }}/web-vulnerabilities/">{{ t.back }}</a>
+<h1 class="list-title">{{ s.name }} <span class="count">{{ s.posts.length }} {{ t.note if s.posts.length == 1 else t.notes }}</span></h1>
+<div class="post-list">
+{%- for post in s.posts %}
+{% include "postcard.njk" %}
+{%- endfor %}
+</div>

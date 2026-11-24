@@ -1,0 +1,17 @@
+{%- set t = i18n[lang] %}{%- set px = t.prefix %}
+{%- set limit = 3 %}
+<h1 class="list-title">{{ t.vulnsTitle }}</h1>
+<p class="tagline section-intro"><span class="prompt">&gt;</span> {{ t.vulnsIntro }}</p>
+{%- for s in collections | coll("seriesList", lang) %}
+<section class="tag-group" id="{{ s.slug }}" style="margin-bottom:3.5rem">
+  <h2 class="topic-head"><a href="{{ px }}/web-vulnerabilities/{{ s.slug }}/">{{ loop.index | pad2 }} // {{ s.name }}</a> <span class="count">{{ s.posts.length }} {{ t.note if s.posts.length == 1 else t.notes }}</span></h2>
+  <div class="post-list" style="margin-top:1.2rem">
+  {%- for post in (s.posts | reverse | head(limit)) %}
+  {% include "postcard.njk" %}
+  {%- endfor %}
+  </div>
+  {%- if s.posts.length > limit %}
+  <p class="see-all"><a class="more" href="{{ px }}/web-vulnerabilities/{{ s.slug }}/">{{ t.seeAll | replace("{name}", s.name) | replace("{n}", s.posts.length) }}</a></p>
+  {%- endif %}
+</section>
+{%- endfor %}

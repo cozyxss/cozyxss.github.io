@@ -1,13 +1,6 @@
 ---
 layout: base.njk
+permalink: "/"
+
 ---
-<h1 class="sr-only">All posts</h1>
-{%- if collections.posts.length %}
-<div class="post-list">
-{%- for post in collections.posts %}
-{% include "postcard.njk" %}
-{%- endfor %}
-</div>
-{%- else %}
-<p class="muted">No posts yet.</p>
-{%- endif %}
+{% include "pages/home.njk" %}

@@ -1,17 +1,18 @@
 ---
 layout: base.njk
 ---
-{%- set nx = collections.posts | getPreviousCollectionItem(page) -%}
-{%- set pv = collections.posts | getNextCollectionItem(page) -%}
+{%- set t = i18n[lang] %}{%- set px = t.prefix %}
+{%- set list = collections | coll("posts", lang) %}
+{%- set nx = list | getPreviousCollectionItem(page) -%}
+{%- set pv = list | getNextCollectionItem(page) -%}
 <article class="post">
   <header class="post-head">
-    <a class="back" href="/">← cd ..</a>
+    <a class="back" href="{{ px }}/">{{ t.back }}</a>
     <div class="bar">
       {%- if no is defined %}<span class="no">{{ no | pad }}</span><span class="sl">//</span>{% endif %}
-      <time datetime="{{ page.date | isoDate }}">{{ page.date | date }}</time>
-      <span class="sl">//</span><span>{{ content | readTime }} min read</span>
-      {%- if series %}<span class="sl">//</span><a href="/web-vulnerabilities/#{{ series | slug2 }}">{{ series }} {{ part | pad2 }}</a>{% endif %}
-      {%- if category %}<span class="sl">//</span><a href="/category/{{ category | slug2 }}/">#{{ category }}</a>{% endif %}
+      <time datetime="{{ page.date | isoDate }}">{{ page.date | date(t.locale) }}</time>
+      <span class="sl">//</span><span>{{ content | readTime }} {{ t.minRead }}</span>
+      {%- if series %}<span class="sl">//</span><a href="{{ px }}/web-vulnerabilities/{{ series | slug2 }}/">{{ series }} {{ part | pad2 }}</a>{% endif %}
     </div>
     <h1>{{ title }}</h1>
     {%- if summary %}<p class="post-lede"><span class="prompt">&gt;</span> {{ summary }}</p>{% endif %}
@@ -28,34 +29,34 @@ layout: base.njk
   {%- set tl = tags | realTags %}
   {%- if tl.length %}
   <p class="post-tags">
-    {%- for t in tl %}<a href="/tags/#{{ t | slug2 }}">{{ t }}</a>{% endfor -%}
+    {%- for tg in tl %}<a href="{{ px }}/tags/#{{ tg | slug2 }}">{{ tg }}</a>{% endfor -%}
   </p>
   {%- endif %}
 
   <div class="post-actions">
     <div class="clap">
-      <span class="clap-hint">&gt; liked it?</span>
+      <span class="clap-hint">{{ t.likedIt | replace(">", "&gt;") | safe }}</span>
       <applause-button multiclap="true" url="cozyxss.com{{ page.url }}"></applause-button>
     </div>
-    <button class="copy-link" type="button" data-url="{{ site.url }}{{ page.url }}">copy link</button>
+    <button class="copy-link" type="button" data-url="{{ site.url }}{{ page.url }}">{{ t.copyLink }}</button>
   </div>
 
   <div class="byline">
     {% set avatarClass = "av-byline" %}{% include "avatar.njk" %}
-    <p><span class="muted">written by</span> betul {% include "syms.njk" %}<br><span class="muted">aka cozyxss · your friendly neighbourhood bug bounty hunter</span></p>
+    <p><span class="muted">{{ t.writtenBy }}</span> betul {% include "syms.njk" %}<br><span class="muted">{{ t.aka }}</span></p>
   </div>
 
   <nav class="post-nav" aria-label="More posts">
     {%- if nx %}
-    <a class="next" href="{{ nx.url }}"><span>newer →</span>{{ nx.data.title }}</a>
+    <a class="next" href="{{ nx.url }}"><span>{{ t.newer }}</span>{{ nx.data.title }}</a>
     {%- endif %}
     {%- if pv %}
-    <a class="prev" href="{{ pv.url }}"><span>← older</span>{{ pv.data.title }}</a>
+    <a class="prev" href="{{ pv.url }}"><span>{{ t.older }}</span>{{ pv.data.title }}</a>
     {%- endif %}
   </nav>
 
   <section class="comments" aria-label="Comments">
-    <h2><span class="prompt">&gt;</span> comments</h2>
+    <h2><span class="prompt">&gt;</span> {{ t.comments }}</h2>
     {%- if site.giscus.repoId and site.giscus.categoryId %}
     <div class="giscus"></div>
     <script>
@@ -73,7 +74,7 @@ layout: base.njk
           "data-emit-metadata": "0",
           "data-input-position": "top",
           "data-theme": document.documentElement.dataset.theme === "dark" ? "transparent_dark" : "light",
-          "data-lang": "en",
+          "data-lang": "{{ lang }}",
           "data-loading": "lazy",
           crossorigin: "anonymous"
         };
@@ -83,7 +84,7 @@ layout: base.njk
       })();
     </script>
     {%- else %}
-    <p class="muted">Comments will appear here once giscus is connected.</p>
+    <p class="muted">{{ t.commentsSoon }}</p>
     {%- endif %}
   </section>
 </article>

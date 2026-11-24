@@ -1,0 +1,16 @@
+{%- set t = i18n[lang] %}
+{%- set tagList = collections | coll("tagList", lang) %}
+<h1 class="list-title">{{ t.tagsTitle }}</h1>
+<p class="tag-cloud">
+{%- for tg in tagList %}<a href="#{{ tg.slug }}">{{ tg.name }} <span class="count">{{ tg.posts.length }}</span></a>{% endfor -%}
+</p>
+{%- for tg in tagList %}
+<section class="tag-group" id="{{ tg.slug }}">
+  <h2>{{ tg.name }}</h2>
+  <ul class="compact-list">
+  {%- for post in tg.posts %}
+    <li><time datetime="{{ post.date | isoDate }}">{{ post.date | date(t.locale) }}</time><a href="{{ post.url }}">{% if post.data.no is defined %}{{ post.data.no | pad }} | {% endif %}{{ post.data.title }}</a></li>
+  {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}

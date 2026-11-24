@@ -26,51 +26,47 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/images": "images" });
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
 
-  // All posts, newest first
-  eleventyConfig.addCollection("posts", (api) =>
-    api.getFilteredByGlob("src/posts/*.md").filter((p) => !p.data.draft).reverse()
-  );
+  // Posts per language: English in src/posts/, Turkish in src/tr/posts/ (same file names)
+  const globs = { en: "src/posts/*.md", tr: "src/tr/posts/*.md" };
+  const live = (api, lang) => api.getFilteredByGlob(globs[lang]).filter((p) => !p.data.draft);
 
-  // Categories: [{ name, slug, posts }]
-  eleventyConfig.addCollection("categories", (api) => {
-    const posts = api.getFilteredByGlob("src/posts/*.md").filter((p) => !p.data.draft).reverse();
-    const map = new Map();
-    for (const p of posts) {
-      const c = p.data.category;
-      if (!c) continue;
-      if (!map.has(c)) map.set(c, { name: c, slug: slug(c), posts: [] });
-      map.get(c).posts.push(p);
-    }
-    return [...map.values()];
-  });
+  for (const lang of ["en", "tr"]) {
+    const sfx = lang === "en" ? "" : "_tr";
 
-  // Tags: [{ name, slug, posts }]
-  eleventyConfig.addCollection("tagList", (api) => {
-    const posts = api.getFilteredByGlob("src/posts/*.md").filter((p) => !p.data.draft).reverse();
-    const map = new Map();
-    for (const p of posts) {
-      for (const t of p.data.tags || []) {
-        if (t === "posts") continue;
-        if (!map.has(t)) map.set(t, { name: t, slug: slug(t), posts: [] });
-        map.get(t).posts.push(p);
+    // All posts, newest first
+    eleventyConfig.addCollection("posts" + sfx, (api) => live(api, lang).reverse());
+
+    // Tags: [{ name, slug, posts }]
+    eleventyConfig.addCollection("tagList" + sfx, (api) => {
+      const map = new Map();
+      for (const p of live(api, lang).reverse()) {
+        for (const t of p.data.tags || []) {
+          if (t === "posts") continue;
+          if (!map.has(t)) map.set(t, { name: t, slug: slug(t), posts: [] });
+          map.get(t).posts.push(p);
+        }
       }
-    }
-    return [...map.values()].sort((a, b) => a.name.localeCompare(b.name));
-  });
+      return [...map.values()].sort((a, b) => a.name.localeCompare(b.name));
+    });
 
-  // Web vulnerability series: [{ name, slug, posts }] — posts in part order (00, 01, ...)
-  eleventyConfig.addCollection("seriesList", (api) => {
-    const posts = api.getFilteredByGlob("src/posts/*.md").filter((p) => !p.data.draft);
-    const map = new Map();
-    for (const p of posts) {
-      const s = p.data.series;
-      if (!s) continue;
-      if (!map.has(s)) map.set(s, { name: s, slug: slug(s), posts: [] });
-      map.get(s).posts.push(p);
-    }
-    for (const v of map.values()) v.posts.sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0));
-    return [...map.values()];
-  });
+    // Web vulnerability series: [{ name, slug, posts }], posts in part order (00, 01, ...)
+    eleventyConfig.addCollection("seriesList" + sfx, (api) => {
+      const map = new Map();
+      for (const p of live(api, lang)) {
+        const s = p.data.series;
+        if (!s) continue;
+        if (!map.has(s)) map.set(s, { name: s, slug: slug(s), posts: [] });
+        map.get(s).posts.push(p);
+      }
+      for (const v of map.values()) v.posts.sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0));
+      return [...map.values()];
+    });
+
+    // Burp notes: posts tagged "burp", newest first
+    eleventyConfig.addCollection("burp" + sfx, (api) =>
+      live(api, lang).filter((p) => (p.data.tags || []).includes("burp")).reverse()
+    );
+  }
 
   eleventyConfig.addFilter("slug2", slug);
   eleventyConfig.addFilter("head", (arr, n) => (arr || []).slice(0, n));
@@ -81,8 +77,14 @@ export default function (eleventyConfig) {
     const words = String(html).replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
     return Math.max(1, Math.round(words / 200));
   });
-  eleventyConfig.addFilter("date", (d) =>
-    new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
+  eleventyConfig.addFilter("date", (d, locale = "en-US") =>
+    new Date(d).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
+  );
+  // Pick a collection for the current language: coll(collections, "posts", "tr") -> collections.posts_tr
+  eleventyConfig.addFilter("coll", (all, name, lang) => all[lang === "tr" ? name + "_tr" : name] || []);
+  // URL of the same page in the other language
+  eleventyConfig.addFilter("altUrl", (url, lang) =>
+    lang === "tr" ? (url.replace(/^\/tr(\/|$)/, "/") || "/") : "/tr" + url
   );
   eleventyConfig.addFilter("isoDate", (d) => new Date(d).toISOString().slice(0, 10));
   eleventyConfig.addFilter("realTags", (tags) => (tags || []).filter((t) => t !== "posts"));

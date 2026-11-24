@@ -1,0 +1,12 @@
+{%- set t = i18n[lang] %}
+{%- set list = collections | coll("posts", lang) %}
+<h1 class="sr-only">{{ t.allPosts }}</h1>
+{%- if list.length %}
+<div class="post-list">
+{%- for post in list %}
+{% include "postcard.njk" %}
+{%- endfor %}
+</div>
+{%- else %}
+<p class="muted">{{ t.noPosts }}</p>
+{%- endif %}

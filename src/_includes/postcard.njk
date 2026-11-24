@@ -1,9 +1,8 @@
 <article class="card">
   <div class="bar">
     {%- if post.data.no is defined %}<span class="no">{{ post.data.no | pad }}</span><span class="sl">//</span>{% endif %}
-    <time datetime="{{ post.date | isoDate }}">{{ post.date | date }}</time>
-    {%- if post.data.series %}<span class="sl">//</span><a href="/web-vulnerabilities/#{{ post.data.series | slug2 }}">{{ post.data.series }} {{ post.data.part | pad2 }}</a>{% endif %}
-    {%- if post.data.category %}<span class="sl">//</span><a href="/category/{{ post.data.category | slug2 }}/">#{{ post.data.category }}</a>{% endif %}
+    <time datetime="{{ post.date | isoDate }}">{{ post.date | date(t.locale) }}</time>
+    {%- if post.data.series %}<span class="sl">//</span><a href="{{ t.prefix }}/web-vulnerabilities/{{ post.data.series | slug2 }}/">{{ post.data.series }} {{ post.data.part | pad2 }}</a>{% endif %}
   </div>
   <div class="card-inner{% if post.data.cover %} has-cover{% endif %}">
     {%- if post.data.cover %}
@@ -17,8 +16,8 @@
       <p class="card-summary"><span class="prompt">&gt;</span> {{ post.data.summary }}</p>
       {%- endif %}
       <div class="card-foot">
-        <span class="tags">{%- for t in post.data.tags | realTags %}<a href="/tags/#{{ t | slug2 }}">{{ t }}</a>{% endfor -%}</span>
-        <a class="more" href="{{ post.url }}" aria-label="Read {{ post.data.title }}">read →</a>
+        <span class="tags">{%- for tg in post.data.tags | realTags %}<a href="{{ t.prefix }}/tags/#{{ tg | slug2 }}">{{ tg }}</a>{% endfor -%}</span>
+        <a class="more" href="{{ post.url }}" aria-label="{{ t.readAria }} {{ post.data.title }}">{{ t.read }}</a>
       </div>
     </div>
   </div>

@@ -1,0 +1,9 @@
+{%- set t = i18n[lang] %}
+{%- set list = collections | coll("burp", lang) %}
+<h1 class="list-title">{{ t.burpTitle }} <span class="count">{{ list.length }} {{ t.note if list.length == 1 else t.notes }}</span></h1>
+<p class="tagline section-intro"><span class="prompt">&gt;</span> {{ t.burpIntro }}</p>
+<div class="post-list">
+{%- for post in list %}
+{% include "postcard.njk" %}
+{%- endfor %}
+</div>

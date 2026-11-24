@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang }}">
+{%- set t = i18n[lang] %}{%- set px = t.prefix %}
+<html lang="{{ lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0b0c">
 {% set pageTitle = (title + " · " + site.title) if title else (site.title + " | " + site.subtitle) %}
 <title>{{ pageTitle }}</title>
-<meta name="description" content="{{ summary or site.description }}">
+<meta name="description" content="{{ summary or t.description }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="alternate" hreflang="{{ lang }}" href="{{ site.url }}{{ page.url }}">
+<link rel="alternate" hreflang="{{ t.otherLang }}" href="{{ site.url }}{{ page.url | altUrl(lang) }}">
 <meta property="og:title" content="{{ title or site.title }}">
-<meta property="og:description" content="{{ summary or site.description }}">
+<meta property="og:description" content="{{ summary or t.description }}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:type" content="{{ 'article' if no else 'website' }}">
 {% if cover %}<meta property="og:image" content="{{ site.url }}{{ cover }}">
@@ -33,25 +36,26 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="ticker"><div class="wrap"><span class="who">{% include "syms.njk" %}</span><span class="sl">//</span><span>bug bounty notes · ctf writeups · lessons learned</span></div></div>
+<div class="ticker"><div class="wrap"><span class="who">{% include "syms.njk" %}</span><span class="sl">//</span><span>{{ t.ticker }}</span></div></div>
 <header class="site-header wrap">
   <div class="brand-row">
-    <a class="brand" href="/" aria-label="cozyxss home">
+    <a class="brand" href="{{ px }}/" aria-label="cozyxss home">
       <span class="brand-name">{{ site.title }}</span><span class="cursor" aria-hidden="true">_</span>
     </a>
+    <div class="head-tools">
+    <a class="lang-switch" href="{{ page.url | altUrl(lang) }}" hreflang="{{ t.otherLang }}" lang="{{ t.otherLang }}" title="{{ t.switchLabel }}"><span aria-current="true">{{ t.langName }}</span><span class="sl">/</span><span>{{ t.otherLangName }}</span></a>
     <button class="theme-toggle" type="button" aria-label="Switch between screen and paper mode" title="screen / paper">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
     </button>
+    </div>
   </div>
-  <p class="tagline"><span class="prompt">&gt;</span> {{ site.tagline }}</p>
-  <nav class="cat-nav" aria-label="Categories">
-    <a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>all</a>
-    <a href="/web-vulnerabilities/" {% if page.url.startsWith('/web-vulnerabilities/') %}aria-current="page"{% endif %}>web vulns</a>
-    {%- for c in collections.categories %}
-    <a href="/category/{{ c.slug }}/" {% if page.url == '/category/' + c.slug + '/' %}aria-current="page"{% endif %}>#{{ c.name }}</a>
-    {%- endfor %}
-    <a href="/tags/" {% if page.url == '/tags/' %}aria-current="page"{% endif %}>tags</a>
-    <a href="/about/" {% if page.url == '/about/' %}aria-current="page"{% endif %}>about</a>
+  <p class="tagline"><span class="prompt">&gt;</span> {{ t.tagline }}</p>
+  <nav class="cat-nav" aria-label="Sections">
+    <a href="{{ px }}/" {% if page.url == px + '/' %}aria-current="page"{% endif %}>{{ t.navAll }}</a>
+    <a href="{{ px }}/web-vulnerabilities/" {% if (px + '/web-vulnerabilities/') in page.url %}aria-current="page"{% endif %}>{{ t.navVulns }}</a>
+    <a href="{{ px }}/burp/" {% if page.url == px + '/burp/' %}aria-current="page"{% endif %}>{{ t.navBurp }}</a>
+    <a href="{{ px }}/tags/" {% if page.url == px + '/tags/' %}aria-current="page"{% endif %}>{{ t.navTags }}</a>
+    <a href="{{ px }}/about/" {% if page.url == px + '/about/' %}aria-current="page"{% endif %}>{{ t.navAbout }}</a>
   </nav>
 </header>
 
@@ -76,7 +80,7 @@
       <a href="/feed.xml">rss</a>
     </div>
   </div>
-  <div class="ticker" aria-hidden="true"><div class="wrap"><span>clap if it helped. follow @cozyxss</span></div></div>
+  <div class="ticker" aria-hidden="true"><div class="wrap"><span>{{ t.tickerFoot }}</span></div></div>
 </footer>
 <script src="/assets/js/site.js" defer></script>
 </body>
